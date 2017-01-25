@@ -11,7 +11,7 @@ public class Main {
         while(true) {
             Thread thread = new PingThread(time, sleft, w);
             thread.start();
-            wait4time(next);
+            w.wait4next(next);
             time = hhmm();
             next += 60*1000;
             sleft = 60;
@@ -29,13 +29,6 @@ public class Main {
         String mm = m<10?"0"+m:""+m;
 
         return "" + hh + ":" + mm;
-    }
-    public static void wait4time(long next) {
-        long sleep;
-        while((sleep = next - System.currentTimeMillis()) > 0)
-            try{
-                Thread.sleep(sleep);
-            }catch(Exception e){}
     }
 }
 class PingThread extends Thread {

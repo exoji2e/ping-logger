@@ -21,6 +21,13 @@ public class Writer {
             out.close();
         } catch (IOException e) {}
     }
+    public synchronized void wait4next(long next) {
+        long diff;
+        try{
+        while((diff = next - System.currentTimeMillis()) > 0) 
+            wait(diff);
+        }catch(Exception e) {}
+    }
     public String getDate() {
         Date d = new Date();
         int year = d.getYear() + 1900;
