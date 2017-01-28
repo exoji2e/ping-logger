@@ -23,12 +23,18 @@ public class Main {
     }
     public static String hhmm() {
         Date d = new Date();
+        int year = d.getYear() + 1900;
+        int month = d.getMonth() + 1;
+        int day = d.getDate();
+        String yy = "" + year;
+        String mm = month<10? "0" + month : "" + month;
+        String dd = day<10? "0" + day : "" + day;
         int h = d.getHours();
         String hh = h<10?"0"+h:""+h;
         int m = d.getMinutes();
-        String mm = m<10?"0"+m:""+m;
+        String min = m<10?"0"+m:""+m;
 
-        return "" + hh + ":" + mm;
+        return yy + "_" + mm + "_" + dd + "_" + hh + ":" + min;
     }
 }
 class PingThread extends Thread {
