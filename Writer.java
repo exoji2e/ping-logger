@@ -7,7 +7,7 @@ public class Writer {
         this.path = path;
     }
     public synchronized void print(String when, LinkedList<String> what) {
-        if(date == null || when.equals("00:00")) {
+        if(date == null || when.contains("00:00")) {
             date = getDate();
         }
         try(PrintWriter out = 
@@ -19,7 +19,10 @@ public class Writer {
                 out.println("" + when + " " + s);
             }
             out.close();
-        } catch (IOException e) {}
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+
     }
     public synchronized void wait4next(long next) {
         long diff;

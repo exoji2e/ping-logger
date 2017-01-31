@@ -52,20 +52,23 @@ class PingThread extends Thread {
         BufferedReader b = new BufferedReader(new InputStreamReader(p.getInputStream()));
         String line = "";
         LinkedList<String> toPrint = new LinkedList<>();
+        int c = 0;
         while((line = b.readLine()) != null) {
-            if(!line.contains("icmp_seq")) continue;
-            if((line.substring(line.length()-2)).equals("ms")) {
+            if(line.contains("icmp_seq") && (line.substring(line.length()-2)).equals("ms")) {
                 String[] a = line.split("=");
                 String resp = a[a.length-1];
                 System.out.println(time + " " + resp.substring(0,resp.length() - 3));
                 toPrint.addLast(resp.substring(0,resp.length() - 3));
-            }else if(line.contains("timeout")) {
-                System.out.println(time + " -");
-                toPrint.addLast("-");
+                c++;
             }
         }
         b.close();
+        for(; c<count; c++) {
+            toPrint.addLast("-");
+        }
         w.print(time, toPrint);
-        }catch(Exception e) {}
+        }catch(Exception e) {
+            System.out.println(e);
+        }
     }
 }
